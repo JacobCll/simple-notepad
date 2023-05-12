@@ -54,22 +54,23 @@ class App:
         self.lower_frame.columnconfigure(0, weight=1)
         self.lower_frame.rowconfigure(0, weight=1)
 
-
-        #for horizontal scrollbar   
-        self.scrollx = tk.Scrollbar(self.lower_frame, orient='horizontal')
-        self.scrollx.grid(column=0, row=1, sticky=tk.W+tk.E+tk.S+tk.N)
-
-        #verticasl scrollbar
-        self.scrolly = tk.Scrollbar(self.lower_frame, orient='vertical')
-        self.scrolly.grid(column=1, row=0, sticky=tk.W+tk.E+tk.S+tk.N)
-
-        # scrolled text widget
-        self.text = tk.Text(self.lower_frame, autoseparators=True, undo=True, bd=1, wrap=tk.NONE, highlightbackground='#f2f2f2',font=TkFont.Font(family='Consolas', size=11), xscrollcommand=self.scrollx.set, yscrollcommand=self.scrolly.set)
+        # Text widget
+        self.text = tk.Text(self.lower_frame, autoseparators=True, undo=True, bd=1, wrap=tk.NONE, highlightbackground='#f2f2f2',font=TkFont.Font(family='Consolas', size=11))
         self.text.grid(column=0, row=0, sticky=tk.W+tk.E+tk.S+tk.N)
 
-        # # empty space beside scrollx
-        # self.empt = tk.Label(self.lower_frame, text='  ', bg='#f0f0f0')
-        # self.empt.grid(column=1, row=1)
+        #horizontal scrollbar   
+        self.scrollx = tk.Scrollbar(self.lower_frame, orient='horizontal', command=self.text.xview)
+        self.scrollx.grid(column=0, row=1, sticky=tk.W+tk.E+tk.S+tk.N)
+
+        #vertical scrollbar
+        self.scrolly = tk.Scrollbar(self.lower_frame, orient='vertical', command=self.text.yview)
+        self.scrolly.grid(column=1, row=0, sticky=tk.W+tk.E+tk.S+tk.N)
+
+        self.text['xscrollcommand'] = self.scrollx.set
+        self.text['yscrollcommand'] = self.scrolly.set
+
+        #get content 
+        # self.content = self.text.get()
 
 
 
