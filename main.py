@@ -8,7 +8,8 @@ from tkinter import filedialog
 class App:
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title("Notepad")
+        self.root.title('Notepad')
+        self.tle = None
         self.root.resizable(True, True)
         self.root.geometry("400x500")
         self.root.config(bg='#ffffff')
@@ -28,7 +29,6 @@ class App:
         self.mb1.menu.add_command(label='Open', command=lambda: self.open_file())
         self.exists = tk.StringVar()
         self.exists = ''
-
 
         self.mb1.menu.add_command(label='Save', command=lambda: self.open_file())
         self.mb1.menu.add_command(label='Save As', command=lambda: self.save_as())
@@ -68,54 +68,59 @@ class App:
         #horizontal scrollbar   
         self.scrollx = tk.Scrollbar(self.lower_frame, orient='horizontal', command=self.text.xview)
         self.scrollx.grid(column=0, row=1, sticky=tk.W+tk.E+tk.S+tk.N)
+        self.text['xscrollcommand'] = self.scrollx.set
 
         #vertical scrollbar
         self.scrolly = tk.Scrollbar(self.lower_frame, orient='vertical', command=self.text.yview)
         self.scrolly.grid(column=1, row=0, sticky=tk.W+tk.E+tk.S+tk.N)
-        self.text['xscrollcommand'] = self.scrollx.set
         self.text['yscrollcommand'] = self.scrolly.set
+
 
         self.root.mainloop()
 
+    ###
+    # erases all 
+    def new_file(self):
+        self.exists = ''
+        self.text.delete("1.0","end-1c")
+        self.root.title('Notepad')
 
-    # save txt file to pc
-    #checks if the file is not there
+    # opens an existing file
     def open_file(self):
         file_path = filedialog.askopenfilename(title="Open note file", filetypes=[("Text File", "*.txt")], defaultextension=".txt")
         with open(file_path, 'r') as txt_file:
             data = txt_file.read()
             self.text.insert('1.0', data)
-        self.exists = file_path
-        title = file_path.split('/')[-1]
-        self.root.title(f'{title} - Notepad')
+        self.exists = file_path 
+        self.tle = self.exists.split('/')[-1]
+        self.root.title(f"{self.tle} - Notepad")
 
     def save_file(self):
-        if self.is_saved():
-            pass
-        else:
-            self.save_as()
+        pass
 
     def save_as(self):
         text = self.retrieve_input()
         file_path = filedialog.asksaveasfilename(title="Save note file", initialfile='notefile', filetypes=[("Text File", "*.txt")], defaultextension=".txt", confirmoverwrite=True)
         with open(file_path, 'w') as txt_file:
             txt_file.write(text)
-        
-    # blanks page
-    def new_file(self):
-        pass
     
+    ###
     # checks if file is changed or not
     def file_changed(self) -> bool:
         with open(self.exists, "r") as f:
             original = hashlib.md5(f.read().encode('utf-8')).hexdigest()
             copy = hashlib.md5(self.retrieve_input().encode('utf-8')).hexdigest()
+        print(original == copy)
         return original == copy
 
     #takes the text in text widget
     def retrieve_input(self):
         content = self.text.get("1.0","end-1c")
         return content
+    
+
+                
+        
         
 
 
