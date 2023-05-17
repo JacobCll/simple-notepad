@@ -1,2 +1,2 @@
 # simple-notepad
-simple notepad program written in Python
+A basic text editor made with Tkinter
