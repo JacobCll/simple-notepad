@@ -9,7 +9,6 @@ class App:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title('Notepad')
-        self.root.resizable(True, True)
         self.root.geometry("400x500")
         self.root.config(bg='#ffffff')
 
@@ -33,12 +32,12 @@ class App:
         self.mb1.grid(column=0, row=0, sticky=tk.W)
 
         #second button
-        self.mb2 = tk.Menubutton(self.upper_frame, text='Edit', relief='flat', background='#ffffff',activebackground='#cce8ff', bd=0)
-        self.mb2.menu = tk.Menu(self.mb2, tearoff=0)
-        self.mb2['menu'] = self.mb2.menu
+        # self.mb2 = tk.Menubutton(self.upper_frame, text='Edit', relief='flat', background='#ffffff',activebackground='#cce8ff', bd=0)
+        # self.mb2.menu = tk.Menu(self.mb2, tearoff=0)
+        # self.mb2['menu'] = self.mb2.menu
 
-        self.mb2.menu.add_command(label='CHECK', command=lambda: self.file_changed())
-        self.mb2.grid(column=1, row=0, sticky=tk.W)
+        # self.mb2.menu.add_command(label='CHECK', command=lambda: self.file_changed())
+        # self.mb2.grid(column=1, row=0, sticky=tk.W)
 
         #third button
         self.mb3 = tk.Menubutton(self.upper_frame, text='Format', relief='flat', background='#ffffff',activebackground='#cce8ff', bd=0)
@@ -53,7 +52,7 @@ class App:
         self.lower_frame = tk.Frame(self.root, bg='#f0f0f0')
         self.lower_frame.grid(column=0,row=1,sticky=tk.W+tk.E+tk.S+tk.N)
 
-        # to stretch the widgets 
+        # resizable widgets
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(1, weight=1)
         self.lower_frame.columnconfigure(0, weight=1)
@@ -66,11 +65,11 @@ class App:
         #horizontal scrollbar   
         self.scrollx = tk.Scrollbar(self.lower_frame, orient='horizontal', command=self.text.xview)
         self.scrollx.grid(column=0, row=1, sticky=tk.W+tk.E+tk.S+tk.N)
-        self.text['xscrollcommand'] = self.scrollx.set
-
         #vertical scrollbar
         self.scrolly = tk.Scrollbar(self.lower_frame, orient='vertical', command=self.text.yview)
         self.scrolly.grid(column=1, row=0, sticky=tk.W+tk.E+tk.S+tk.N)
+
+        self.text['xscrollcommand'] = self.scrollx.set
         self.text['yscrollcommand'] = self.scrolly.set
 
         self.root.mainloop()
@@ -134,7 +133,6 @@ class App:
 
     #takes the text in text widget
     def retrieve_input(self):
-        content = self.text.get("1.0","end-1c")
-        return content
+        return self.text.get("1.0","end-1c")
 
 App()
