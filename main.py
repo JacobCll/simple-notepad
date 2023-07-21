@@ -31,15 +31,7 @@ class App:
 
         self.mb1.grid(column=0, row=0, sticky=tk.W)
 
-        #second button
-        # self.mb2 = tk.Menubutton(self.upper_frame, text='Edit', relief='flat', background='#ffffff',activebackground='#cce8ff', bd=0)
-        # self.mb2.menu = tk.Menu(self.mb2, tearoff=0)
-        # self.mb2['menu'] = self.mb2.menu
-
-        # self.mb2.menu.add_command(label='CHECK', command=lambda: self.file_changed())
-        # self.mb2.grid(column=1, row=0, sticky=tk.W)
-
-        #third button
+        #2nd button
         self.mb3 = tk.Menubutton(self.upper_frame, text='Format', relief='flat', background='#ffffff',activebackground='#cce8ff', bd=0)
         self.mb3.menu = tk.Menu(self.mb3, tearoff=0)
         self.mb3['menu'] = self.mb3.menu
